@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('perbandingan_sub_kriteria_hamas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sub_kriteria_id_1')->constrained('sub_kriteria_hama')->onDelete('cascade');
-            $table->foreignId('sub_kriteria_id_2')->constrained('sub_kriteria_hama')->onDelete('cascade');
-            $table->decimal('nilai', 8, 4);
+            $table->foreignId('sub_kriteria_id_1')->constrained('sub_kriteria_hamas')->onDelete('cascade');
+            $table->foreignId('sub_kriteria_id_2')->constrained('sub_kriteria_hamas')->onDelete('cascade');
+            $table->decimal('nilai', 8, 2);
             $table->timestamps();
         });
     }

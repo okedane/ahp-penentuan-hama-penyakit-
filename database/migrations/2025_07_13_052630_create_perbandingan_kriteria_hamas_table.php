@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('kriteria_id_1')->constrained('kriteria_hama')->onDelete('cascade');
             $table->foreignId('kriteria_id_2')->constrained('kriteria_hama')->onDelete('cascade');
-            $table->decimal('nilai', 8, 4); // misal nilai = 1, 3, 5, atau 0.3333
+            $table->decimal('nilai', 8, 2); // misal nilai = 1, 3, 5, atau 0.3333
             $table->timestamps();
         });
     }

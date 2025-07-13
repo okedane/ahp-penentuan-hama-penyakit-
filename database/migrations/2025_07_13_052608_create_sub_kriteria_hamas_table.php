@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('sub_kriteria_hamas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('kriteria_id')->constrained('kriteria')->onDelete('cascade');
+            $table->foreignId('kriteria_id')->constrained('kriteria_hama')->onDelete('cascade');
             $table->string('nama');
             $table->timestamps();
         });

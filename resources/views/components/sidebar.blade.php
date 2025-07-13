@@ -18,15 +18,31 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="cpu"></i>
-                        <span data-key="t-icons">AHP</span>
+                        <span data-key="t-icons">Kriteria</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="">Jabatan</a></li>
+                        <li><a href="{{ route('kriteria.index') }}">Hama</a></li>
+                    </ul>
+                     <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="">Penyakit</a></li>
                     </ul>
                 </li>
 
+                 {{-- <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i data-feather="cpu"></i>
+                        <span data-key="t-icons">Penyakit</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="">Kriteria</a></li>
+                    </ul>
+                     <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="">Sub Kriteria</a></li>
+                    </ul>
+                </li> --}}
 
-                <li>
+
+                {{-- <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="cpu"></i>
                         <span data-key="t-icons">Absesi</span>
@@ -63,7 +79,7 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
 
               
                 <li>
