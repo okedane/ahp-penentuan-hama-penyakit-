@@ -15,20 +15,39 @@
                     </a>
                 </li>
 
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="cpu"></i>
-                        <span data-key="t-icons">Kriteria</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('kriteria.index') }}">Hama</a></li>
-                    </ul>
-                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="">Penyakit</a></li>
-                    </ul>
-                </li>
+                @auth
+                    @if (auth()->user()->role === 'ahli')
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow">
+                                <i data-feather="cpu"></i>
+                                <span data-key="t-icons">Kriteria</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="{{ route('kriteria.index') }}">Hama</a></li>
+                            </ul>
+                            {{-- <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="">Penyakit</a></li>
+                            </ul> --}}
+                        </li>
 
-                 {{-- <li>
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow">
+                                <i data-feather="cpu"></i>
+                                <span data-key="t-icons">Alternatif</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="">Hama</a></li>
+                            </ul>
+                            {{-- <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="">Penyakit</a></li>
+                            </ul> --}}
+                        </li>
+                    @endif
+                @endauth
+
+
+
+                    {{-- <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="cpu"></i>
                         <span data-key="t-icons">Penyakit</span>
@@ -42,7 +61,7 @@
                 </li> --}}
 
 
-                {{-- <li>
+                    {{-- <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="cpu"></i>
                         <span data-key="t-icons">Absesi</span>
@@ -81,18 +100,18 @@
                     </ul>
                 </li> --}}
 
-              
-                <li>
-                    <a href="" class="waves-effect">
-                        <i data-feather="users"></i>
-                        <span data-key="t-dashboard">Management Akun</span>
-                    </a>
-                </li>
-            </ul>
+
+                    <li>
+                        <a href="" class="waves-effect">
+                            <i data-feather="users"></i>
+                            <span data-key="t-dashboard">Management Akun</span>
+                        </a>
+                    </li>
+                </ul>
 
 
+            </div>
+            <!-- Sidebar -->
         </div>
-        <!-- Sidebar -->
     </div>
-</div>
-<!-- Left Sidebar End -->
+    <!-- Left Sidebar End -->

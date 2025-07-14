@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             KriteriaHamaSeeder::class,
             SubKriteriaHamaSeeder::class,
+            UserSeeeder::class,
+            AlternatifHamaSeeder::class,
         ]);
     }
 }

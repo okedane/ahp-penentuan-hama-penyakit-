@@ -16,29 +16,25 @@ class KriteriaHamaSeeder extends Seeder
         DB::table('kriteria_hama')->insert([
             [
                 'kode' => 'C1',
-                'nama' => 'Pekerjaan',
+                'nama' => 'Jenis Kerusakan',
 
             ],
             [
                 'kode' => 'C2',
-                'nama' => 'Pendataan',
+                'nama' => 'Bagian Tanaman Yang Diserang',
 
             ],
             [
                 'kode' => 'C3',
-                'nama' => 'Jumlah Tanggungan',
+                'nama' => 'Bentuk Serangan',
 
             ],
             [
                 'kode' => 'C4',
-                'nama' => 'Jenis Penerangan',
+                'nama' => 'Tanda keberadaan Hama',
 
             ],
-            [
-                'kode' => 'C5',
-                'nama' => 'usia',
-
-            ],
+            
         ]);
     }
 }

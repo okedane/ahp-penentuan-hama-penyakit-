@@ -25,7 +25,7 @@
                                 <div class="col-6">
                                     <span class="text-muted mb-3 lh-1 d-block text-truncate">Jabatan</span>
                                     <h4 class="mb-3">
-                                        <span class="counter-value" data-target="{{ $totalJabatan }}">{{ $totalJabatan }}</span>
+                                        <span class="counter-value" data-target="5">5</span>
                                     </h4>
                                 </div>
                                 <div class="col-6">
@@ -45,7 +45,7 @@
                                 <div class="col-6">
                                     <span class="text-muted mb-3 lh-1 d-block text-truncate">Karyawan</span>
                                     <h4 class="mb-3">
-                                        <span class="counter-value" data-target="{{ $totalKaryawan }}">{{ $totalKaryawan }}</span>
+                                        <span class="counter-value" data-target="14">14</span>
                                     </h4>
                                 </div>
 
@@ -67,7 +67,7 @@
                                 <div class="col-6">
                                     <span class="text-muted mb-3 lh-1 d-block text-truncate">Total Hadir</span>
                                     <h4 class="mb-3">
-                                        <span class="counter-value" data-target="{{ $totalHadir }}">{{ $totalHadir }}</span>
+                                        <span class="counter-value" data-target="20">20</span>
                                     </h4>
                                 </div>
                                 <div class="col-6">
@@ -87,7 +87,7 @@
                                 <div class="col-6">
                                     <span class="text-muted mb-3 lh-1 d-block text-truncate">Terlambat</span>
                                     <h4 class="mb-3">
-                                        <span class="counter-value" data-target="{{ $totalTerlambat }}">{{ $totalTerlambat }}</span>
+                                        <span class="counter-value" data-target="3">3</span>
                                     </h4>
                                 </div>
                                 <div class="col-6">
