@@ -36,7 +36,7 @@
                                 <span data-key="t-icons">Alternatif</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="">Hama</a></li>
+                                <li><a href="{{ route('alternatif.index') }}">Hama</a></li>
                             </ul>
                             {{-- <ul class="sub-menu" aria-expanded="false">
                                 <li><a href="">Penyakit</a></li>
@@ -47,7 +47,7 @@
 
 
 
-                    {{-- <li>
+                {{-- <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="cpu"></i>
                         <span data-key="t-icons">Penyakit</span>
@@ -61,7 +61,7 @@
                 </li> --}}
 
 
-                    {{-- <li>
+                {{-- <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="cpu"></i>
                         <span data-key="t-icons">Absesi</span>
@@ -101,17 +101,17 @@
                 </li> --}}
 
 
-                    <li>
-                        <a href="" class="waves-effect">
-                            <i data-feather="users"></i>
-                            <span data-key="t-dashboard">Management Akun</span>
-                        </a>
-                    </li>
-                </ul>
+                <li>
+                    <a href="" class="waves-effect">
+                        <i data-feather="users"></i>
+                        <span data-key="t-dashboard">Management Akun</span>
+                    </a>
+                </li>
+            </ul>
 
 
-            </div>
-            <!-- Sidebar -->
         </div>
+        <!-- Sidebar -->
     </div>
-    <!-- Left Sidebar End -->
+</div>
+<!-- Left Sidebar End -->

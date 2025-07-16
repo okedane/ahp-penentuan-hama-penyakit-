@@ -12,7 +12,7 @@ class KriteriaHamaController extends Controller
     public function index()
     {
         $kriteria = KriteriaHama::orderBy('created_at', 'asc')->get();
-        return view('ahli.hama.kriteria', compact('kriteria'));
+        return view('ahli.hama.kriteria.kriteria', compact('kriteria'));
     }
 
     public function store(Request $request)
@@ -91,7 +91,7 @@ class KriteriaHamaController extends Controller
             }
         }
 
-        return view('ahli.hama.matrix_kriteria', compact('kriterias', 'matriks', 'editable'));
+        return view('ahli.hama.kriteria.matrix_kriteria', compact('kriterias', 'matriks', 'editable'));
     }
 
 

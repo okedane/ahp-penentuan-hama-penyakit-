@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ahli\hama\alternatifHamaController;
 use App\Http\Controllers\ahli\hama\SubKriteriaHamaController;
 use App\Http\Controllers\ahli\hama\KriteriaHamaController;
 use App\Http\Controllers\AuthController;
@@ -34,7 +35,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
         return view('ahli.dashboard.index');
     })->name('dashboard.ahli')->middleware('userAkses:ahli');
-    
+
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 
@@ -57,12 +58,21 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/{id}/matriks/store/go', [SubKriteriaHamaController::class, 'postMatriks'])->name('matriks.post');
     });
 
+    Route::middleware(['userAkses:ahli'])->prefix('alternatif')->group(function () {
+        Route::get('/', [alternatifHamaController::class, 'index'])->name('alternatif.index');
+        Route::post('/', [alternatifHamaController::class, 'store'])->name('alternatif.post');
+        Route::put('/{id}', [alternatifHamaController::class, 'update'])->name('alternatif.put');
+        Route::delete('/{id}', [alternatifHamaController::class, 'delete'])->name('alternatif.delete');
+        Route::get('/penilaian-alternatif', [AlternatifHamaController::class, 'tampilPenilaianAlternatif'])->name('alternatif.penilaian.form');
+        Route::post('/penilaian-alternatif', [AlternatifHamaController::class, 'simpanPenilaian'])->name('alternatif.penilaian.simpan');
+    });
+
+
+
+
     Route::middleware(['userAkses:petani'])->prefix('petani')->group(function () {
-       Route::get('/dashboard/ku', function () {
-        return view('petani.dashboard.index');
-    })->name('dashboard.petani')->middleware('userAkses:petani');
-
-        // Add other petani routes here
-
+        Route::get('/dashboard/ku', function () {
+            return view('petani.dashboard.index');
+        })->name('dashboard.petani')->middleware('userAkses:petani');
     });
 });

@@ -15,7 +15,7 @@ class SubKriteriaHamaController extends Controller
     {
         $subKriteria = SubKriteriaHama::where('kriteria_id', $id)->orderBy('created_at', 'asc')->get();
         $kriteria = KriteriaHama::findOrFail($id);
-        return view('ahli.hama.sub_kriteria', compact('subKriteria', 'kriteria'));
+        return view('ahli.hama.sub_kriteria.sub_kriteria', compact('subKriteria', 'kriteria'));
     }
 
     public function post(Request $request)
@@ -86,7 +86,7 @@ class SubKriteriaHamaController extends Controller
             }
         }
 
-        return view('ahli.hama.matrik_sub_kriteria', compact('subKriteria', 'matriks', 'id'));
+        return view('ahli.hama.sub_kriteria.matrik_sub_kriteria', compact('subKriteria', 'matriks', 'id'));
     }
 
 
