@@ -73,6 +73,55 @@
                             </button>
                         </div>
                     </div>
+
+                    {{-- Tabel normalisasi --}}
+                    <h5 class="mt-4">Normalisasi Matriks</h5>
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-end align-middle">
+                            <thead class="text-center">
+                                <tr>
+                                    <th>Kriteria</th>
+                                    @foreach ($kriterias as $col)
+                                        <th>{{ $col->kode }}</th>
+                                    @endforeach
+                                    <th>Rata-rata</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($kriterias as $row)
+                                    <tr>
+                                        <th class="text-start">{{ $row->kode }}</th>
+                                        @foreach ($kriterias as $col)
+                                            <td>{{ number_format($hasil['normalisasi'][$row->id][$col->id] ?? 0, 3) }}
+                                            </td>
+                                        @endforeach
+                                        <td class="fw-bold">{{ number_format($hasil['rataRata'][$row->id] ?? 0, 3) }}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    @if ($konsistensi)
+                        <div class="card mt-3">
+                            <div class="card-body">
+                                <h5 class="mb-3">Hasil Konsistensi</h5>
+                                <ul>
+                                    <li>λ Max: <strong>{{ number_format($konsistensi['lambda_max'], 4) }}</strong></li>
+                                    <li>CI (Consistency Index): <strong>{{ number_format($konsistensi['ci'], 4) }}</strong>
+                                    </li>
+                                    <li>CR (Consistency Ratio): <strong>{{ number_format($konsistensi['cr'], 4) }}</strong>
+                                        @if ($konsistensi['cr'] <= 0.1)
+                                            <span class="text-success"> (Konsisten ✅)</span>
+                                        @else
+                                            <span class="text-danger"> (Tidak Konsisten ❌)</span>
+                                        @endif
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    @endif
+
                 </div>
             </form>
         </div>

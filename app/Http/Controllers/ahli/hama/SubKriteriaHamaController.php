@@ -59,6 +59,38 @@ class SubKriteriaHamaController extends Controller
         return back()->with('success', 'data telah dihapus');
     }
 
+    // ===========================================================
+
+    // public function matriks($id)
+    // {
+    //     $subKriteria = SubKriteriaHama::where('kriteria_id', $id)->get();
+    //     $matriks = [];
+
+    //     foreach ($subKriteria as $row) {
+    //         foreach ($subKriteria as $col) {
+    //             if ($row->id == $col->id) {
+    //                 $matriks[$row->id][$col->id] = 1;
+    //             } else {
+    //                 $nilai = PerbandinganSubKriteriaHama::where('sub_kriteria_id_1', $row->id)
+    //                     ->where('sub_kriteria_id_2', $col->id)->value('nilai');
+
+    //                 $nilaiKebalikan = PerbandinganSubKriteriaHama::where('sub_kriteria_id_1', $col->id)
+    //                     ->where('sub_kriteria_id_2', $row->id)->value('nilai');
+
+    //                 if ($nilai) {
+    //                     $matriks[$row->id][$col->id] = $nilai;
+    //                 } elseif ($nilaiKebalikan) {
+    //                     $matriks[$row->id][$col->id] = 1 / $nilaiKebalikan;
+    //                 } else {
+    //                     $matriks[$row->id][$col->id] = null;
+    //                 }
+    //             }
+    //         }
+    //     }
+
+    //     return view('ahli.hama.sub_kriteria.matrik_sub_kriteria', compact('subKriteria', 'matriks', 'id'));
+    // }
+
     public function matriks($id)
     {
         $subKriteria = SubKriteriaHama::where('kriteria_id', $id)->get();
@@ -86,8 +118,25 @@ class SubKriteriaHamaController extends Controller
             }
         }
 
-        return view('ahli.hama.sub_kriteria.matrik_sub_kriteria', compact('subKriteria', 'matriks', 'id'));
+        // ===== Proses Normalisasi dan Konsistensi =====
+        $subkriterias = $subKriteria->values(); // indexed ulang
+        $hasil = $this->hitungBobotInternal($subkriterias);
+        $konsistensi = $this->hitungKonsistensi($hasil['matriks'], $hasil['bobot']);
+
+        // Kirim semua data ke view
+        return view('ahli.hama.sub_kriteria.matrik_sub_kriteria', [
+            'subKriteria' => $subKriteria,
+            'matriks' => $matriks,
+            'normalisasi' => $hasil['normalisasi'],
+            'jumlah' => $hasil['jumlah'],
+            'bobot' => $hasil['bobot'],
+            'lambdaMax' => $konsistensi['lambdaMax'],
+            'ci' => $konsistensi['ci'],
+            'cr' => $konsistensi['cr'],
+            'id' => $id
+        ]);
     }
+
 
 
     public function postMatriks(Request $request, $id)
@@ -122,5 +171,66 @@ class SubKriteriaHamaController extends Controller
         }
 
         return redirect()->route('matriks', $id)->with('success', 'Matriks sub kriteria berhasil disimpan!');
+    }
+
+    // ===========================================================
+
+    private function hitungBobotInternal($subkriterias)
+    {
+        $n = count($subkriterias);
+        $matriks = [];
+        $totalKolom = array_fill(0, $n, 0);
+
+        foreach ($subkriterias as $i => $baris) {
+            foreach ($subkriterias as $j => $kolom) {
+                $nilai = $baris->getNilai($kolom->id);
+                $matriks[$i][$j] = $nilai;
+                $totalKolom[$j] += $nilai;
+            }
+        }
+
+        $normalisasi = [];
+        $jumlah = [];
+        $bobot = [];
+
+        for ($i = 0; $i < $n; $i++) {
+            $sum = 0;
+            for ($j = 0; $j < $n; $j++) {
+                $norm = $matriks[$i][$j] / $totalKolom[$j];
+                $normalisasi[$i][$j] = $norm;
+                $sum += $norm;
+            }
+            $jumlah[$i] = $sum;
+            $bobot[$i] = $sum / $n;
+        }
+
+        return compact('matriks', 'normalisasi', 'jumlah', 'bobot');
+    }
+
+    private function hitungKonsistensi($matriks, $bobot)
+    {
+        $n = count($matriks);
+        $lambdaMax = 0;
+
+        for ($i = 0; $i < $n; $i++) {
+            $total = 0;
+            for ($j = 0; $j < $n; $j++) {
+                $total += $matriks[$i][$j] * $bobot[$j];
+            }
+            $lambdaMax += $total / $bobot[$i];
+        }
+
+        $lambdaMax = $lambdaMax / $n;
+        $ci = ($lambdaMax - $n) / ($n - 1);
+        $ri = $this->getRI($n);
+        $cr = ($ri == 0) ? 0 : $ci / $ri;
+
+        return compact('lambdaMax', 'ci', 'cr');
+    }
+
+    private function getRI($n)
+    {
+        $riTable = [0, 0, 0.58, 0.9, 1.12, 1.24, 1.32, 1.41, 1.45];
+        return $riTable[$n] ?? 1.5;
     }
 }

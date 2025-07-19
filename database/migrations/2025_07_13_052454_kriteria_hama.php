@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('kode')->unique();
             $table->string('nama');
+            $table->float('bobot')->nullable();
             $table->timestamps();
         });
     }

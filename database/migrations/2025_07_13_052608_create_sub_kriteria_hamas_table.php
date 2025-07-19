@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('kriteria_id')->constrained('kriteria_hama')->onDelete('cascade');
             $table->string('kode');
             $table->string('nama');
+            $table->float('bobot')->nullable();
             $table->timestamps();
         });
     }
