@@ -111,4 +111,31 @@ class alternatifHamaController extends Controller
             return redirect()->back()->with('error', 'Gagal menyimpan penilaian: ' . $e->getMessage());
         }
     }
+
+    public function normalisasiPenilaianAlternatif()
+    {
+        $alternatifs = AlternatifHama::all();
+        $subkriterias = SubKriteriaHama::all();
+
+        $normalisasi = [];
+
+        foreach ($subkriterias as $sub) {
+            // Ambil semua nilai Xij untuk subkriteria j
+            $nilaiKolom = PenilaianAlternatifHama::where('sub_kriteria_id', $sub->id)->pluck('nilai');
+
+            // Hitung penyebut: akar dari jumlah kuadrat
+            $penyebut = sqrt($nilaiKolom->reduce(fn($carry, $item) => $carry + pow($item, 2), 0));
+
+            // Hitung normalisasi tiap alternatif
+            foreach ($alternatifs as $alt) {
+                $nilai = PenilaianAlternatifHama::where('alternatif_id', $alt->id)
+                    ->where('sub_kriteria_id', $sub->id)
+                    ->value('nilai');
+
+                $normalisasi[$alt->id][$sub->id] = $penyebut > 0 ? round($nilai / $penyebut, 4) : 0;
+            }
+        }
+
+        return view('ahli.hama.alternatif.normalisasi', compact('alternatifs', 'subkriterias', 'normalisasi'));
+    }
 }

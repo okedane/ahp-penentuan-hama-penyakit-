@@ -56,44 +56,6 @@ class KriteriaHamaController extends Controller
     }
 
 
-    // public function matriks()
-    // {
-    //     $kriterias = KriteriaHama::all();
-
-    //     $matriks = [];
-    //     $editable = [];
-
-    //     foreach ($kriterias as $row) {
-    //         foreach ($kriterias as $col) {
-    //             if ($row->id === $col->id) {
-    //                 $matriks[$row->id][$col->id] = 1;
-    //                 $editable[$row->id][$col->id] = false;
-    //             } else {
-    //                 $nilai = PerbandinganKriteriaHama::where('kriteria_id_1', $row->id)
-    //                     ->where('kriteria_id_2', $col->id)->value('nilai');
-
-    //                 if ($nilai) {
-    //                     $matriks[$row->id][$col->id] = $nilai;
-    //                     $editable[$row->id][$col->id] = true;
-    //                 } else {
-    //                     $nilai_kebalikan = PerbandinganKriteriaHama::where('kriteria_id_1', $col->id)
-    //                         ->where('kriteria_id_2', $row->id)->value('nilai');
-    //                     if ($nilai_kebalikan) {
-    //                         $nilai = round(1 / $nilai_kebalikan, 4);
-    //                         $matriks[$row->id][$col->id] = $nilai;
-    //                         $editable[$row->id][$col->id] = false;
-    //                     } else {
-    //                         $matriks[$row->id][$col->id] = null;
-    //                         $editable[$row->id][$col->id] = true; // bisa diisi pertama kali
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-
-    //     return view('ahli.hama.kriteria.matrix_kriteria', compact('kriterias', 'matriks', 'editable'));
-    // }
-
     public function matriks()
     {
         $kriterias = KriteriaHama::all();

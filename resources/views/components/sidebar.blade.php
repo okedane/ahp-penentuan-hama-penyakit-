@@ -45,6 +45,17 @@
                     @endif
                 @endauth
 
+                @auth
+                    @if (auth()->user()->role === 'petani')
+                        <li>
+                            <a href="{{ route('petani.input.gejala') }}" class="waves-effect">
+                                <i data-feather="file-text"></i>
+                                <span data-key="t-dashboard">Input Gejala</span>
+                            </a>
+                        </li>
+                    @endif
+                @endauth
+
 
 
                 {{-- <li>

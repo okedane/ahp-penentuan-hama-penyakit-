@@ -9,23 +9,24 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+    // database/migrations/xxxx_xx_xx_create_gejala_petani_table.php
+
     public function up(): void
     {
-        Schema::create('penilaian_alternatif_hamas', function (Blueprint $table) {
+        Schema::create('gejala_petani', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('alternatif_id')->constrained('alternatif_hamas')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('sub_kriteria_id')->constrained('sub_kriteria_hamas')->onDelete('cascade');
-            $table->float('nilai'); // nilai antara 0 - 1
             $table->timestamps();
-            $table->unique(['alternatif_id', 'sub_kriteria_id']);
         });
     }
+
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('penilaian_alternatif_hamas');
+        Schema::dropIfExists('gejala_petani');
     }
 };

@@ -11,7 +11,23 @@ class SubKriteriaHama extends Model
 
     protected $table = 'sub_kriteria_hamas';
 
-    protected $fillable = ['kriteria_id', 'kode', 'nama'];
+    protected $fillable = ['kriteria_id', 'kode', 'nama', 'bobot'];
+
+    public function getNilai(SubKriteriaHama $lainnya)
+    {
+        $nilai = PerbandinganSubKriteriaHama::where('sub_kriteria_id_1', $this->id)
+            ->where('sub_kriteria_id_2', $lainnya->id)
+            ->value('nilai');
+
+        if ($nilai) return $nilai;
+
+        $nilaiKebalikan = PerbandinganSubKriteriaHama::where('sub_kriteria_id_1', $lainnya->id)
+            ->where('sub_kriteria_id_2', $this->id)
+            ->value('nilai');
+
+        return $nilaiKebalikan ? 1 / $nilaiKebalikan : 1; // Default 1 jika tidak ada data
+    }
+
 
     public function kriteria()
     {

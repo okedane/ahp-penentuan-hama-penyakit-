@@ -30,7 +30,7 @@
                     <table class="table table-bordered text-center align-middle" style="min-width: 1400px;">
                         <thead>
                             <tr class="table-primary align-middle text-center">
-                                <th rowspan="2">Alternatif \ Kriteria</th>
+                                <th rowspan="2">Alternatif</th>
                                 @foreach ($kriterias as $kriteria)
                                     <th colspan="{{ $kriteria->subkriterias->count() }}">{{ $kriteria->kode }}</th>
                                 @endforeach

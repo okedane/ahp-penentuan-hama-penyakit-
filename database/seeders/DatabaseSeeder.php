@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             SubKriteriaHamaSeeder::class,
             UserSeeeder::class,
             AlternatifHamaSeeder::class,
+            PenilaianAlternatifHamaSeeder::class,
         ]);
     }
 }
