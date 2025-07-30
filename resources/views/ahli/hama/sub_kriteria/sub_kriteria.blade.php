@@ -43,6 +43,7 @@
                                 <th style="width:20px">No</th>
 
                                 <th>Nama</th>
+                                <th>Bobot</th>
                                 <th style="text-align: center; width: 100px;" class="no-export">Action</th>
                             </tr>
                         </thead>
@@ -51,6 +52,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->nama }}</td>
+                                    <th>{{ $item->bobot }}</th>
 
                                     <td style="text-align: center; width: 100px;">
                                         <div class="d-flex justify-content-center gap-2">

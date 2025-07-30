@@ -50,12 +50,14 @@
                                     @foreach ($kriterias as $kriteria)
                                         @foreach ($kriteria->subkriterias as $sub)
                                             @php
-                                                $value = old("nilai.{$alt->id}.{$sub->id}", $penilaian[$alt->id][$sub->id] ?? '');
+                                                $value = old(
+                                                    "nilai.{$alt->id}.{$sub->id}",
+                                                    $penilaian[$alt->id][$sub->id] ?? '',
+                                                );
                                             @endphp
                                             <td>
                                                 <input type="number" step="0.01" min="0" max="5"
-                                                    class="form-control text-end"
-                                                    style="min-width: 120px"
+                                                    class="form-control text-end" style="min-width: 120px"
                                                     name="nilai[{{ $alt->id }}][{{ $sub->id }}]"
                                                     value="{{ $value }}">
                                             </td>
@@ -76,5 +78,86 @@
 
             </form>
         </div>
+        {{-- Normalisasi --}}
+        <div class="mt-5">
+            <h5>Hasil Normalisasi</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered text-center align-middle" style="min-width: 1400px;">
+                    <thead>
+                        <tr class="table-primary align-middle text-center">
+                            <th rowspan="2">Alternatif</th>
+                            @foreach ($kriterias as $kriteria)
+                                <th colspan="{{ $kriteria->subkriterias->count() }}">{{ $kriteria->kode }}</th>
+                            @endforeach
+                        </tr>
+                        <tr class="table-primary">
+
+                            @foreach ($kriterias as $kriteria)
+                                @foreach ($kriteria->subkriterias as $sub)
+                                    <th>{{ $sub->kode }}</th>
+                                @endforeach
+                            @endforeach
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        @foreach ($alternatifs as $alt)
+                            <tr>
+                                <th class="table-secondary text-start">{{ $alt->kode }}</th>
+                                @foreach ($kriterias as $kriteria)
+                                    @foreach ($kriteria->subkriterias as $sub)
+                                        <td>
+                                            {{ number_format($normalisasi[$alt->id][$sub->id] ?? 0, 3) }}
+                                        </td>
+                                    @endforeach
+                                @endforeach
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        {{-- Pembobotan --}}
+        <div class="mt-5">
+            <h5>Hasil Pembobotan</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered text-center align-middle" style="min-width: 1400px;">
+                    <thead>
+                        <tr class="table-primary align-middle text-center">
+                            <th rowspan="2">Alternatif</th>
+                            @foreach ($kriterias as $kriteria)
+                                <th colspan="{{ $kriteria->subkriterias->count() }}">{{ $kriteria->kode }}</th>
+                            @endforeach
+                        </tr>
+                        <tr class="table-success">
+
+                            @foreach ($kriterias as $kriteria)
+                                @foreach ($kriteria->subkriterias as $sub)
+                                    <th>{{ $sub->kode }}</th>
+                                @endforeach
+                            @endforeach
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($alternatifs as $alt)
+                            <tr>
+                                <th class="table-secondary text-start">{{ $alt->kode }}</th>
+                                @foreach ($kriterias as $kriteria)
+                                    @foreach ($kriteria->subkriterias as $sub)
+                                        <td>
+                                            {{ number_format($pembobotan[$alt->id][$sub->id] ?? 0, 3) }}
+                                        </td>
+                                    @endforeach
+                                @endforeach
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
     </div>
 </x-app>

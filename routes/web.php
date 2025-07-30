@@ -4,6 +4,7 @@ use App\Http\Controllers\ahli\hama\alternatifHamaController;
 use App\Http\Controllers\ahli\hama\SubKriteriaHamaController;
 use App\Http\Controllers\ahli\hama\KriteriaHamaController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\petani\DiagnosaController;
 use App\Http\Controllers\petani\PetaniController;
 // use App\Http\Controllers\KriteriaHamaController;
 use App\Models\KriteriaHama;
@@ -78,5 +79,6 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/input-gejala', [PetaniController::class, 'inputGejalaForm'])->name('petani.input.gejala');
         Route::post('/input-gejala', [PetaniController::class, 'simpanGejala'])->name('petani.input.gejala.store');
+        Route::get('/diagnosa', [PetaniController::class, 'diagnosa'])->name('petani.diagnosa');
     });
 });

@@ -42,7 +42,7 @@ class SubKriteriaHamaController extends Controller
             ]);
 
             $subKriteria = SubKriteriaHama::findOrFail($id);
-            // dd($subKriteria);
+
             $subKriteria->update($validated);
 
             return redirect()->back()->with('success', 'SubKriteria berhasil diperbarui');
@@ -63,7 +63,7 @@ class SubKriteriaHamaController extends Controller
 
 
 
-    // ===========================================================
+
 
 
 
@@ -94,13 +94,15 @@ class SubKriteriaHamaController extends Controller
             }
         }
 
-        // ===== Proses Normalisasi dan Konsistensi =====
-        $subkriterias = $subKriteria->values(); // indexed ulang
+
+        $subkriterias = $subKriteria->values();
         $hasil = $this->hitungBobotInternal($subkriterias);
         $konsistensi = $this->hitungKonsistensi($hasil['matriks'], $hasil['bobot']);
-        // dd($hasil, $subkriterias);
 
-        // Kirim semua data ke view
+        foreach ($hasil['bobot'] as $idSub => $nilaiBobot) {
+            SubKriteriaHama::where('id', $idSub)->update(['bobot' => $nilaiBobot]);
+        }
+
         return view('ahli.hama.sub_kriteria.matrik_sub_kriteria', compact(
             'subKriteria',
             'matriks',
@@ -146,39 +148,8 @@ class SubKriteriaHamaController extends Controller
         return redirect()->route('matriks', $id)->with('success', 'Matriks sub kriteria berhasil disimpan!');
     }
 
-    // ===========================================================
 
-    // private function hitungBobotInternal($subkriterias)
-    // {
-    //     $n = count($subkriterias);
-    //     $matriks = [];
-    //     $totalKolom = array_fill(0, $n, 0);
 
-    //     foreach ($subkriterias as $i => $baris) {
-    //         foreach ($subkriterias as $j => $kolom) {
-    //             $nilai = $baris->getNilai($kolom); // ✅ ini bagian penting
-    //             $matriks[$i][$j] = $nilai;
-    //             $totalKolom[$j] += $nilai;
-    //         }
-    //     }
-
-    //     $normalisasi = [];
-    //     $jumlah = [];
-    //     $bobot = [];
-
-    //     for ($i = 0; $i < $n; $i++) {
-    //         $sum = 0;
-    //         for ($j = 0; $j < $n; $j++) {
-    //             $norm = $matriks[$i][$j] / $totalKolom[$j];
-    //             $normalisasi[$i][$j] = $norm;
-    //             $sum += $norm;
-    //         }
-    //         $jumlah[$i] = $sum;
-    //         $bobot[$i] = $sum / $n;
-    //     }
-
-    //     return compact('matriks', 'normalisasi', 'jumlah', 'bobot');
-    // }
 
     private function hitungBobotInternal($subkriterias)
     {
@@ -187,7 +158,7 @@ class SubKriteriaHamaController extends Controller
         $totalKolom = [];
         $ids = $subkriterias->pluck('id')->toArray();
 
-        // Hitung jumlah kolom
+
         foreach ($ids as $j) {
             $totalKolom[$j] = 0;
             foreach ($ids as $i) {
@@ -197,7 +168,7 @@ class SubKriteriaHamaController extends Controller
             }
         }
 
-        // Normalisasi dan bobot
+
         $normalisasi = [];
         $jumlah = [];
         $bobot = [];
@@ -234,7 +205,7 @@ class SubKriteriaHamaController extends Controller
 
         $lambda_max = $lambda_max / $n;
         $ci = ($lambda_max - $n) / ($n - 1);
-        $ri = $this->getRI($n); // Fungsi untuk ambil nilai Random Index
+        $ri = $this->getRI($n);
         $cr = $ri == 0 ? 0 : $ci / $ri;
 
         return [

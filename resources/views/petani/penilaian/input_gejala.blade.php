@@ -31,7 +31,7 @@
                     @endforeach
 
                     <div class="text-end">
-                        <button type="submit" class="btn btn-success px-4">Kirim Gejala</button>
+                        <button type="submit" class="btn btn-success px-4">Kirim & Diagnosa</button>
                     </div>
                 </form>
             </div>

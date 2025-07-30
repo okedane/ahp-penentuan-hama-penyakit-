@@ -56,11 +56,12 @@ class KriteriaHamaController extends Controller
     }
 
 
+
     public function matriks()
     {
         $kriterias = KriteriaHama::all();
 
-        // Matriks utama
+        // Matriks utama dan pengontrol kolom editable
         $matriks = [];
         $editable = [];
 
@@ -79,6 +80,7 @@ class KriteriaHamaController extends Controller
                     } else {
                         $nilai_kebalikan = PerbandinganKriteriaHama::where('kriteria_id_1', $col->id)
                             ->where('kriteria_id_2', $row->id)->value('nilai');
+
                         if ($nilai_kebalikan) {
                             $nilai = round(1 / $nilai_kebalikan, 4);
                             $matriks[$row->id][$col->id] = $nilai;
@@ -92,25 +94,28 @@ class KriteriaHamaController extends Controller
             }
         }
 
-        // Panggil fungsi hitung bobot
-        $hasil = $this->hitungBobotInternal($kriterias, $matriks); // Gunakan fungsi bantu internal
-        $konsistensi = $this->hitungKonsistensi();
+        // Proses perhitungan bobot dan konsistensi
+        $hasil = $this->hitungBobotInternal($kriterias, $matriks);
+        $this->simpanBobotKriteria($hasil['rataRata']);
+
+        // Hitung λmax, CI, dan CR untuk cek konsistensi
+        $konsistensi = $this->hitungKonsistensi($matriks, $hasil['rataRata']);
 
         return view('ahli.hama.kriteria.matrix_kriteria', [
-            'kriterias' => $kriterias,
-            'matriks' => $matriks,
-            'editable' => $editable,
-            'hasil' => $hasil,
-            'konsistensi' => $konsistensi
+            'kriterias'   => $kriterias,
+            'matriks'     => $matriks,
+            'editable'    => $editable,
+            'hasil'       => $hasil,
+            'konsistensi' => $konsistensi,
         ]);
     }
+
 
 
 
     public function storeMatriks(Request $request)
     {
         $matriks = $request->input('matriks', []);
-
         $kriterias = KriteriaHama::all();
 
         foreach ($kriterias as $row) {
@@ -119,7 +124,6 @@ class KriteriaHamaController extends Controller
                 $id2 = $col->id;
 
                 if ($id1 == $id2) {
-                    // Simpan nilai diagonal = 1
                     PerbandinganKriteriaHama::updateOrCreate([
                         'kriteria_id_1' => $id1,
                         'kriteria_id_2' => $id2,
@@ -127,7 +131,6 @@ class KriteriaHamaController extends Controller
                         'nilai' => 1
                     ]);
                 } elseif (isset($matriks[$id1][$id2])) {
-                    // Simpan nilai input user A vs B
                     $nilai = $matriks[$id1][$id2];
 
                     PerbandinganKriteriaHama::updateOrCreate([
@@ -137,7 +140,6 @@ class KriteriaHamaController extends Controller
                         'nilai' => $nilai
                     ]);
 
-                    // Simpan juga nilai kebalikannya B vs A
                     PerbandinganKriteriaHama::updateOrCreate([
                         'kriteria_id_1' => $id2,
                         'kriteria_id_2' => $id1,
@@ -148,8 +150,36 @@ class KriteriaHamaController extends Controller
             }
         }
 
-        return redirect()->route('kriteria.matriks')->with('success', 'Seluruh matriks berhasil disimpan ke database!');
+        // 🔁 Tambahkan proses perhitungan bobot dan simpan
+        $matriksBaru = [];
+
+        foreach ($kriterias as $row) {
+            foreach ($kriterias as $col) {
+                if ($row->id === $col->id) {
+                    $matriksBaru[$row->id][$col->id] = 1;
+                } else {
+                    $nilai = PerbandinganKriteriaHama::where('kriteria_id_1', $row->id)
+                        ->where('kriteria_id_2', $col->id)->value('nilai');
+
+                    if (!$nilai) {
+                        $nilaiKebalikan = PerbandinganKriteriaHama::where('kriteria_id_1', $col->id)
+                            ->where('kriteria_id_2', $row->id)->value('nilai');
+
+                        $nilai = $nilaiKebalikan ? round(1 / $nilaiKebalikan, 4) : 0;
+                    }
+
+                    $matriksBaru[$row->id][$col->id] = $nilai;
+                }
+            }
+        }
+
+        // Hitung bobot lalu simpan
+        $hasil = $this->hitungBobotInternal($kriterias, $matriksBaru);
+        $this->simpanBobotKriteria($hasil['rataRata']);
+
+        return redirect()->route('kriteria.matriks')->with('success', 'Matriks dan bobot berhasil disimpan!');
     }
+
 
 
 
@@ -185,6 +215,16 @@ class KriteriaHamaController extends Controller
             'rataRata' => $rataRata,
         ];
     }
+
+    private function simpanBobotKriteria($rataRata)
+    {
+        foreach ($rataRata as $kriteriaId => $bobot) {
+            KriteriaHama::where('id', $kriteriaId)->update([
+                'bobot' => $bobot
+            ]);
+        }
+    }
+
 
 
 
