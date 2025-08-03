@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('alternatif_id')->constrained('alternatif_hamas')->onDelete('cascade');
             $table->foreignId('sub_kriteria_id')->constrained('sub_kriteria_hamas')->onDelete('cascade');
-            $table->float('nilai'); // nilai antara 0 - 5
+            $table->float('nilai');
+            $table->float('normalisasi')->nullable();
+            $table->float('pembobotan')->nullable();
             $table->timestamps();
             $table->unique(['alternatif_id', 'sub_kriteria_id']);
         });

@@ -22,7 +22,7 @@
                         <div class="card-body">
                             <div class="row align-items-center">
                                 <div class="col-6">
-                                    <span class="text-muted mb-3 lh-1 d-block text-truncate">Jabatan</span>
+                                    <span class="text-muted mb-3 lh-1 d-block text-truncate">Users</span>
                                     <h4 class="mb-3">
                                         <span class="counter-value" data-target="3">3</span>
                                     </h4>
@@ -42,9 +42,9 @@
                         <div class="card-body">
                             <div class="row align-items-center">
                                 <div class="col-6">
-                                    <span class="text-muted mb-3 lh-1 d-block text-truncate">Karyawan</span>
+                                    <span class="text-muted mb-3 lh-1 d-block text-truncate">Kriteria</span>
                                     <h4 class="mb-3">
-                                        <span class="counter-value" data-target="12">34</span>
+                                        <span class="counter-value" data-target="12">4</span>
                                     </h4>
                                 </div>
 
@@ -64,9 +64,9 @@
                         <div class="card-body">
                             <div class="row align-items-center">
                                 <div class="col-6">
-                                    <span class="text-muted mb-3 lh-1 d-block text-truncate">Total Hadir</span>
+                                    <span class="text-muted mb-3 lh-1 d-block text-truncate">Sub Kriteria</span>
                                     <h4 class="mb-3">
-                                        <span class="counter-value" data-target="4">4</span>
+                                        <span class="counter-value" data-target="4">20</span>
                                     </h4>
                                 </div>
                                 <div class="col-6">
@@ -84,7 +84,7 @@
                         <div class="card-body">
                             <div class="row align-items-center">
                                 <div class="col-6">
-                                    <span class="text-muted mb-3 lh-1 d-block text-truncate">Terlambat</span>
+                                    <span class="text-muted mb-3 lh-1 d-block text-truncate">Alternatif</span>
                                     <h4 class="mb-3">
                                         <span class="counter-value" data-target="12">12</span>
                                     </h4>

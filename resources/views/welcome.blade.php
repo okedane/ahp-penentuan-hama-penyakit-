@@ -23,9 +23,9 @@
                         <div class="card-body">
                             <div class="row align-items-center">
                                 <div class="col-6">
-                                    <span class="text-muted mb-3 lh-1 d-block text-truncate">Jabatan</span>
+                                    <span class="text-muted mb-3 lh-1 d-block text-truncate">Admin</span>
                                     <h4 class="mb-3">
-                                        <span class="counter-value" data-target="{{ $totalJabatan }}">{{ $totalJabatan }}</span>
+                                        <span class="counter-value" data-target="{{ $users->where('role', 'admin')->count() }}">{{ $users->where('role', 'admin')->count() }}</span>
                                     </h4>
                                 </div>
                                 <div class="col-6">
@@ -43,9 +43,9 @@
                         <div class="card-body">
                             <div class="row align-items-center">
                                 <div class="col-6">
-                                    <span class="text-muted mb-3 lh-1 d-block text-truncate">Karyawan</span>
+                                    <span class="text-muted mb-3 lh-1 d-block text-truncate">Ahli</span>
                                     <h4 class="mb-3">
-                                        <span class="counter-value" data-target="{{ $totalKaryawan }}">{{ $totalKaryawan }}</span>
+                                        <span class="counter-value" data-target="{{ $users->where('role', 'ahli')->count() }}">{{ $users->where('role', 'ahli')->count() }}</span>
                                     </h4>
                                 </div>
 
@@ -65,9 +65,9 @@
                         <div class="card-body">
                             <div class="row align-items-center">
                                 <div class="col-6">
-                                    <span class="text-muted mb-3 lh-1 d-block text-truncate">Total Hadir</span>
+                                    <span class="text-muted mb-3 lh-1 d-block text-truncate">Petani</span>
                                     <h4 class="mb-3">
-                                        <span class="counter-value" data-target="{{ $totalHadir }}">{{ $totalHadir }}</span>
+                                        <span class="counter-value" data-target="{{ $users->where('role', 'petani')->count() }}">{{ $users->where('role', 'petani')->count() }}</span>
                                     </h4>
                                 </div>
                                 <div class="col-6">
@@ -78,25 +78,7 @@
                     </div><!-- end card -->
                 </div><!-- end col -->
 
-                <div class="col-xl-3 col-md-6">
-                    <!-- card -->
-                    <div class="card card-h-100">
-                        <!-- card body -->
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col-6">
-                                    <span class="text-muted mb-3 lh-1 d-block text-truncate">Terlambat</span>
-                                    <h4 class="mb-3">
-                                        <span class="counter-value" data-target="{{ $totalTerlambat }}">{{ $totalTerlambat }}</span>
-                                    </h4>
-                                </div>
-                                <div class="col-6">
-                                    <div id="mini-chart3" data-colors='["#5156be"]' class="apex-charts mb-2"></div>
-                                </div>
-                            </div>
-                        </div><!-- end card body -->
-                    </div><!-- end card -->
-                </div><!-- end col -->
+              
             </div><!-- end row-->
 
         </div>

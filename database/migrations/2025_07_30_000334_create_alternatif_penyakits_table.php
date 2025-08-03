@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('alternatif_penyakits', function (Blueprint $table) {
             $table->id();
+             $table->string('kode')->unique();
+            $table->string('nama');
             $table->timestamps();
         });
     }

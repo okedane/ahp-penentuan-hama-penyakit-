@@ -9,7 +9,7 @@
                     </span>
                     <span class="logo-lg">
                         <img src="{{ asset('assets/images/favicon.ico') }}" alt="" height="24"> <span
-                            class="logo-txt">Melita</span>
+                            class="logo-txt">Sumenep</span>
                     </span>
                 </a>
 
@@ -19,7 +19,7 @@
                     </span>
                     <span class="logo-lg">
                         <img src="{{ asset('assets/images/favicon.ico') }}" alt="" height="24"> <span
-                            class="logo-txt">Melita</span>
+                            class="logo-txt">Sumenep</span>
                     </span>
                 </a>
             </div>

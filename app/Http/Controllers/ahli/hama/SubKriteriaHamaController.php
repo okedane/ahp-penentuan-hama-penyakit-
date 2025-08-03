@@ -25,7 +25,6 @@ class SubKriteriaHamaController extends Controller
                 'kriteria_id'        => 'required',
                 'nama'              => 'required',
 
-
             ]);
             SubKriteriaHama::create($validated);
             return redirect()->back()->with('success', 'subKriteria berhasil di tambahkan');

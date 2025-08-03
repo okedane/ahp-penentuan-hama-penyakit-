@@ -53,4 +53,29 @@ class AuthController extends Controller
         Auth::logout();
         return redirect()->route('login');
     }
+
+    public function show()
+    {
+        return view('auth.register');
+    }
+
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name'     => 'required|string|max:255',
+            // 'username' => 'required|string|max:255|unique:users,username',
+            'email'    => 'required|email|unique:users,email',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        User::create([
+            'name'     => $request->name,
+            // 'username' => $request->username,
+            'email'    => $request->email,
+            'password' => Hash::make($request->password),
+            'role'     => 'petani', // <- langsung set default 'petani'
+        ]);
+
+        return redirect()->route('login')->with('success', 'Registrasi berhasil, silakan login.');
+    }
 }

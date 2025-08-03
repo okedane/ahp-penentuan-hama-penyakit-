@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('perbandingan_kriteria_penyakits', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('kriteria_id_1')->constrained('kriteria_penyakit')->onDelete('cascade');
+            $table->foreignId('kriteria_id_2')->constrained('kriteria_penyakit')->onDelete('cascade');
+            $table->decimal('nilai', 8, 2); // misal nilai = 1, 3, 5, atau 0.3333
             $table->timestamps();
         });
     }

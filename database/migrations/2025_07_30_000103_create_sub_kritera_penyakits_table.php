@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sub_kritera_penyakits', function (Blueprint $table) {
+        Schema::create('sub_kriteria_penyakits', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('kriteria_id')->constrained('kriteria_penyakit')->onDelete('cascade');
+            $table->string('kode');
+            $table->string('nama');
+            $table->decimal('bobot', 5, 3)->nullable();
             $table->timestamps();
         });
     }

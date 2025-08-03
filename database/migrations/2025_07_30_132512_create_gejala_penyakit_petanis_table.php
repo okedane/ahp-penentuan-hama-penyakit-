@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kriteria_penyakits', function (Blueprint $table) {
+        Schema::create('gejala_penyakit_petanis', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('sub_kriteria_id')->constrained('sub_kriteria_penyakits')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -22,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kriteria_penyakits');
+        Schema::dropIfExists('gejala_penyakit_petanis');
     }
 };
