@@ -15,7 +15,7 @@
                                     <i class="fas fa-seedling text-white" style="font-size: 1.2rem;"></i>
                                 </div>
                                 <div>
-                                    <h4 class="mb-1 fw-bold" style="color: #565758;">Input Gejala Tanaman</h4>
+                                    <h4 class="mb-1 fw-bold" style="color: #565758;">Input Gejala Penyakit</h4>
                                     <small style="color: #565758;">Pilih gejala yang sesuai dengan kondisi tanaman Anda</small>
                                 </div>
                             </div>

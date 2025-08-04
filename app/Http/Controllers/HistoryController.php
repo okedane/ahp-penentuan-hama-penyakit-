@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\HasilDiagnosaPenyakit;
+use App\Models\HasilDiagnosaPetani;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,7 +21,7 @@ class HistoryController extends Controller
 
     public function hama()
     {
-        $riwayats = HasilDiagnosaPenyakit::with('alternatif')
+        $riwayats = HasilDiagnosaPetani::with('alternatif')
             ->where('user_id', Auth::id())
             ->orderBy('created_at', 'DESC')
             ->paginate(10);

@@ -17,26 +17,26 @@ class KriteriaHamaSeeder extends Seeder
             [
                 'kode' => 'C1',
                 'nama' => 'Jenis Kerusakan',
-                'bobot' => 0.315,
+                'bobot' => 0.480,
 
             ],
             [
                 'kode' => 'C2',
                 'nama' => 'Bagian Tanaman Yang Diserang',
-                'bobot' => 0.330,
+                'bobot' => 0.230,
 
 
             ],
             [
                 'kode' => 'C3',
                 'nama' => 'Bentuk Serangan',
-                'bobot' => 0.152,
+                'bobot' => 0.202,
 
             ],
             [
                 'kode' => 'C4',
                 'nama' => 'Tanda keberadaan Hama',
-                'bobot' => 0.202,
+                'bobot' => 0.088,
 
             ],
             

@@ -19,7 +19,7 @@ class AlternatifPenyakitController extends Controller
     }
 
     public function store(Request $request)
-    {
+    { 
         try {
             $validated = $request->validate([
                 'kode'              => 'required',

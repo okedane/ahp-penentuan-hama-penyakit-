@@ -8,6 +8,7 @@ use App\Models\KriteriaHama;
 use App\Models\PenilaianAlternatifHama;
 use App\Models\SubKriteriaHama;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class alternatifHamaController extends Controller
 {
@@ -65,21 +66,22 @@ class alternatifHamaController extends Controller
 
         // Ambil nilai penilaian jika sudah pernah diisi
         $penilaian = [];
+        $normalisasi = [];
+        $pembobotan = [];
 
         foreach ($alternatifs as $alt) {
             foreach ($kriterias as $krit) {
                 foreach ($krit->subkriterias as $sub) {
                     $nilai = PenilaianAlternatifHama::where('alternatif_id', $alt->id)
                         ->where('sub_kriteria_id', $sub->id)
-                        ->value('nilai');
-                    $penilaian[$alt->id][$sub->id] = $nilai;
+                        ->first();
+
+                    $penilaian[$alt->id][$sub->id] = $nilai->nilai ?? null;
+                    $normalisasi[$alt->id][$sub->id] = $nilai->normalisasi ?? null;
+                    $pembobotan[$alt->id][$sub->id] = $nilai->pembobotan ?? null;
                 }
             }
         }
-
-        // Panggil normalisasi
-        $normalisasi = $this->getNormalisasiAlternatif();
-        $pembobotan = $this->getHasilPembobotan();
 
         return view('ahli.hama.alternatif.penilaian', compact('alternatifs', 'kriterias', 'penilaian', 'normalisasi', 'pembobotan'));
     }
@@ -108,6 +110,28 @@ class alternatifHamaController extends Controller
                             'nilai' => $nilai,
                         ]
                     );
+
+                    // Hitung akar pembagi untuk normalisasi
+                    $akarPembagi = sqrt(PenilaianAlternatifHama::where('sub_kriteria_id', $subkriteria_id)
+                        ->sum(DB::raw('pow(nilai, 2)')));
+
+                    // Hitung normalisasi
+                    $normalisasi = $akarPembagi != 0 ? $nilai / $akarPembagi : 0;
+
+                    // Ambil bobot subkriteria
+                    $bobot = SubKriteriaHama::find($subkriteria_id)->bobot ?? 0;
+
+                    // Hitung pembobotan
+                    $pembobotan = $normalisasi * $bobot;
+
+                    // Update nilai normalisasi & pembobotan ke tabel
+                    PenilaianAlternatifHama::where([
+                        'alternatif_id' => $alternatif_id,
+                        'sub_kriteria_id' => $subkriteria_id,
+                    ])->update([
+                        'normalisasi' => round($normalisasi, 4),
+                        'pembobotan' => round($pembobotan, 4),
+                    ]);
                 }
             }
 
@@ -115,76 +139,5 @@ class alternatifHamaController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menyimpan penilaian: ' . $e->getMessage());
         }
-    }
-
-
-    private function getNormalisasiAlternatif()
-    {
-        $alternatifs = AlternatifHama::all();
-        $kriterias = KriteriaHama::with('subkriterias')->get();
-
-        // Ambil nilai mentah dulu
-        $nilaiAwal = [];
-        $pembagi = [];
-
-        foreach ($alternatifs as $alt) {
-            foreach ($kriterias as $kriteria) {
-                foreach ($kriteria->subkriterias as $sub) {
-                    $nilai = PenilaianAlternatifHama::where('alternatif_id', $alt->id)
-                        ->where('sub_kriteria_id', $sub->id)
-                        ->value('nilai') ?? 0;
-
-                    $nilaiAwal[$alt->id][$sub->id] = $nilai;
-
-                    // Simpan untuk pembagi (akar kuadrat dari jumlah kuadrat)
-                    $pembagi[$sub->id] = ($pembagi[$sub->id] ?? 0) + pow($nilai, 2);
-                }
-            }
-        }
-
-        // Hitung akar kuadrat pembagi
-        foreach ($pembagi as $sub_id => $total) {
-            $pembagi[$sub_id] = sqrt($total);
-        }
-
-        // Normalisasi
-        $normalisasi = [];
-        foreach ($nilaiAwal as $alt_id => $subs) {
-            foreach ($subs as $sub_id => $nilai) {
-                $normalisasi[$alt_id][$sub_id] = $pembagi[$sub_id] != 0
-                    ? round($nilai / $pembagi[$sub_id], 4)
-                    : 0;
-            }
-        }
-
-        return $normalisasi;
-    }
-
-    private function getBobotSubkriteria()
-    {
-        $subkriterias = SubKriteriaHama::all();
-        $bobot = [];
-
-        foreach ($subkriterias as $sub) {
-            $bobot[$sub->id] = $sub->bobot ?? 0; // pastikan ada kolom `bobot` di tabel subkriteria
-        }
-
-        return $bobot;
-    }
-
-    private function getHasilPembobotan()
-    {
-        $normalisasi = $this->getNormalisasiAlternatif();
-        $bobotSub = $this->getBobotSubkriteria();
-
-        $pembobotan = [];
-
-        foreach ($normalisasi as $alt_id => $subs) {
-            foreach ($subs as $sub_id => $nilai) {
-                $pembobotan[$alt_id][$sub_id] = round($nilai * ($bobotSub[$sub_id] ?? 0), 4);
-            }
-        }
-
-        return $pembobotan;
     }
 }

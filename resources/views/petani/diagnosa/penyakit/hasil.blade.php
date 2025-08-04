@@ -8,7 +8,7 @@
                         <div class="d-inline-flex align-items-center justify-content-center bg-success bg-opacity-10 rounded-circle p-3 mb-3">
                             <i class="fas fa-microscope text-success" style="font-size: 2rem;"></i>
                         </div>
-                        <h2 class="fw-bold text-dark mb-2">Hasil Diagnosa Tanaman</h2>
+                        <h2 class="fw-bold text-dark mb-2">Hasil Diagnosa Penyakit</h2>
                         <p class="text-muted">Analisis selesai berdasarkan gejala yang Anda pilih</p>
                     </div>
 
@@ -39,7 +39,7 @@
                                         </div>
                                         <div>
                                             <h4 class="mb-0 fw-bold text-danger">{{ $terbaik['nama'] }}</h4>
-                                            <small class="text-muted">Hama/Penyakit yang terdeteksi</small>
+                                            <small class="text-muted">Penyakit yang terdeteksi</small>
                                         </div>
                                     </div>
                                     <p class="text-muted mb-0">
@@ -84,7 +84,7 @@
                                     <thead class="table-light">
                                         <tr>
                                             <th class="px-4 py-3" style="width: 60px;">Rank</th>
-                                            <th class="px-4 py-3">Hama/Penyakit</th>
+                                            <th class="px-4 py-3">Penyakit</th>
                                             <th class="px-4 py-3" style="width: 120px;">Skor</th>
                                             {{-- <th class="px-4 py-3" style="width: 150px;">Tingkat</th>
                                             <th class="px-4 py-3" style="width: 120px;">Kemungkinan</th> --}}

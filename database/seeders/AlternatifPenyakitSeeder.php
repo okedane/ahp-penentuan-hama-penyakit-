@@ -15,28 +15,24 @@ class AlternatifPenyakitSeeder extends Seeder
     {
          DB::table('alternatif_penyakits')->insert([
             [
-                'kode' => 'A1',
-                'nama' => 'Belalang',
+                'kode' => 'A01',
+                'nama' => 'Penyakit Bulai',
             ],
             [
-                'kode' => 'A2',
-                'nama' => 'Ulat Grayak',
+                'kode' => 'A02',
+                'nama' => 'Virus Mozaik Kerdil',
             ],
             [
-                'kode' => 'A3',
-                'nama' => 'Penggerek Batang',
+                'kode' => 'A03',
+                'nama' => 'Penyakit Karat',
             ],
             [
-                'kode' => 'A4',
-                'nama' => 'Penggerek Tongkol',
+                'kode' => 'A04',
+                'nama' => 'Penyakit Gosong Bengkak',
             ],
             [
-                'kode' => 'A5',
-                'nama' => 'Kutu Daun',
-            ],
-            [
-                'kode' => 'A6',
-                'nama' => 'Wereng Jagung (Kumbang Tanduk)',
+                'kode' => 'A05',
+                'nama' => 'Busuk Batang dan Tongkol',
             ],
 
         ]);

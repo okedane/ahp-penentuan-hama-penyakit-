@@ -15,14 +15,14 @@
                                     <i class="fas fa-seedling text-white" style="font-size: 1.2rem;"></i>
                                 </div>
                                 <div>
-                                    <h4 class="mb-1 fw-bold" style="color: #565758;">Input Gejala Tanaman</h4>
+                                    <h4 class="mb-1 fw-bold" style="color: #565758;">Input Gejala Hama</h4>
                                     <small style="color: #565758;">Pilih gejala yang sesuai dengan kondisi tanaman Anda</small>
                                 </div>
                             </div>
                         </div>
 
                         <div class="card-body p-4">
-                            <form method="POST" action="{{ route('petani.input.gejala.penyakit.store') }}">
+                            <form method="POST" action="{{ route('petani.input.gejala.hama.store') }}">
                                 @csrf
 
                                 @foreach ($kriterias as $index => $kriteria)
