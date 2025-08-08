@@ -25,4 +25,14 @@ class HasilDiagnosaPenyakit extends Model
     {
         return $this->belongsTo(AlternatifPenyakit::class, 'alternatif_id');
     }
+
+    // public function subKriterias()
+    // {
+    //     return $this->belongsToMany(
+    //         SubKriteriaPenyakit::class,
+    //         null,
+    //         'id', // tidak pakai pivot table, kita ambil manual dari array
+    //         'id'
+    //     )->whereIn('id', $this->sub_kriteria_ids ?? []);
+    // }
 }

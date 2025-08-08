@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->json('sub_kriteria_ids');
             $table->foreignId('alternatif_id')->constrained('alternatif_penyakits')->onDelete('cascade');
-            $table->decimal('skor', 8, 2)->default(0.00);
+            $table->decimal('skor', 8, 3)->default(0.00);
             $table->timestamps();
         });
     }

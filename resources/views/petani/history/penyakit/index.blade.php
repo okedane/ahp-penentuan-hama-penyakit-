@@ -18,7 +18,7 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                   
+
                     <div class="card-body">
                         <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                             <thead>
@@ -28,6 +28,7 @@
                                     <th>Tanggal</th>
                                     <th>Diagnosa</th>
                                     <th>Skor</th>
+                                    <th>Aksi</th>
 
                                 </tr>
                             </thead>
@@ -38,11 +39,56 @@
                                         <td>{{ $item->created_at->format('d M Y H:i') }}</td>
                                         <td>{{ $item->alternatif->nama }}</td>
                                         <td>{{ $item->skor }}</td>
+                                        <td>
+                                            <button class="btn btn-info btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#modalDetail{{ $item->id }}">
+                                                Lihat Detail
+                                            </button>
+                                        </td>
+
+
                                     </tr>
                                 @endforeach
                             </tbody>
 
                         </table>
+                        <div>
+                            @foreach ($riwayats as $item)
+                                <div class="modal fade" id="modalDetail{{ $item->id }}" tabindex="-1"
+                                    aria-labelledby="modalLabel{{ $item->id }}" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modalLabel{{ $item->id }}">Detail
+                                                    Diagnosa
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p><strong>Diagnosa:</strong>
+                                                    {{ $item->alternatif->nama }}</p>
+                                                <p><strong>Skor:</strong> {{ $item->skor }}</p>
+                                                <p><strong>Tanggal:</strong>
+                                                    {{ $item->created_at->format('d M Y H:i') }}</p>
+                                                <hr>
+                                                <h6>Subkriteria:</h6>
+                                                <ul>
+                                                    @foreach ($item->subkriteria_list as $sub)
+                                                        <li>{{ $sub->nama }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Tutup</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+
+                        </div>
                     </div>
                 </div>
             </div> <!-- end col -->
